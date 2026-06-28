@@ -1,0 +1,65 @@
+import React, { useState } from 'react';
+
+const CATEGORIES = [
+  {
+    label: '😀',
+    title: 'Smileys',
+    emojis: ['😀','😂','🤣','😊','😍','🥺','😭','😎','🤔','😅','😢','😤','😏','🥰','😘','🤩','😱','🤯','🙄','😴','😬','🤐','🥳','😇','🤗','😜','😒','😔','😩','😫'],
+  },
+  {
+    label: '👋',
+    title: 'Gestures',
+    emojis: ['👍','👎','👋','🙌','👏','🤝','✌️','🤞','👌','🤙','💪','🫶','🤜','🤛','🙏','🤲','👐','🫱','🫲','☝️','👆','👇','👈','👉','✋','🤚','🖐️','🖖','🤟','🤘'],
+  },
+  {
+    label: '❤️',
+    title: 'Hearts',
+    emojis: ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💕','💞','💓','💗','💖','💝','💘','💟','❣️','💔','❤️‍🔥','❤️‍🩹','🫀','💋','😻','💌'],
+  },
+  {
+    label: '👻',
+    title: 'Spooky',
+    emojis: ['👻','💀','☠️','🔮','🕯️','🪄','🗝️','🕸️','🕷️','🦇','🌑','🌙','⭐','💫','🌟','✨','🌊','🔥','❄️','🌈','🌫️','🪦','🎭','🎪','🎨','🧿','🪬','🔯','⚡','🌪️'],
+  },
+  {
+    label: '😂',
+    title: 'Misc',
+    emojis: ['🎉','🎊','🥂','🍾','🎯','🎲','🎮','🕹️','🎸','🎵','🎶','📢','📣','💬','💭','💤','🚀','🛸','🌍','🤖','👾','🦄','🐉','🦋','🍀','🌸','🌺','🌴','🍄','⚽'],
+  },
+];
+
+export default function EmojiPicker({ onSelect }) {
+  const [activeTab, setActiveTab] = useState(0);
+
+  return (
+    <div className="emoji-picker" role="dialog" aria-label="Emoji picker">
+      {/* Tabs */}
+      <div className="emoji-tabs">
+        {CATEGORIES.map((cat, i) => (
+          <button
+            key={i}
+            className={`emoji-tab ${activeTab === i ? 'active' : ''}`}
+            onClick={() => setActiveTab(i)}
+            title={cat.title}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid */}
+      <div className="emoji-grid">
+        {CATEGORIES[activeTab].emojis.map((emoji) => (
+          <button
+            key={emoji}
+            className="emoji-btn"
+            onClick={() => onSelect(emoji)}
+            title={emoji}
+          >
+            {emoji}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
