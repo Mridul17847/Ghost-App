@@ -33,7 +33,6 @@ export default function EmojiPicker({ onSelect }) {
 
   return (
     <div className="emoji-picker" role="dialog" aria-label="Emoji picker">
-      {/* Tabs */}
       <div className="emoji-tabs">
         {CATEGORIES.map((cat, i) => (
           <button
@@ -47,7 +46,6 @@ export default function EmojiPicker({ onSelect }) {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="emoji-grid">
         {CATEGORIES[activeTab].emojis.map((emoji) => (
           <button
