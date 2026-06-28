@@ -28,7 +28,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
 
   useEffect(() => { scrollToBottom(); }, [messages, typingUsers]);
 
-  // Close emoji picker on outside click
   useEffect(() => {
     const handler = (e) => {
       if (emojiRef.current && !emojiRef.current.contains(e.target)) {
@@ -39,7 +38,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  // Socket events
   useEffect(() => {
     socket.on('room:history', (history) => {
       setMessages(history.map((m) => ({ ...m, type: 'chat' })));
@@ -87,7 +85,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
     };
   }, []);
 
-  // Typing events
   const handleTyping = (e) => {
     setInput(e.target.value);
     if (!isTypingRef.current) {
@@ -129,12 +126,10 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
     }, 0);
   };
 
-  // Delete
   const handleDelete = (msgId) => {
     socket.emit('message:delete', { roomId: room.id, messageId: msgId });
   };
 
-  // Edit
   const startEdit = (msg) => {
     setEditingId(msg.id);
     setEditValue(msg.content);
@@ -163,7 +158,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
 
   return (
     <div className="chat-layout">
-      {/* Header */}
       <div className="chat-header">
         <button id="back-to-lobby-btn" className="chat-back-btn" onClick={onLeave}>← Back</button>
         <div className="chat-room-info">
@@ -175,7 +169,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="chat-messages" id="chat-messages-container">
         {messages.length === 0 ? (
           <div className="chat-empty">
@@ -196,7 +189,6 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
                 {!isOwn && <span className="msg-author">{msg.author}</span>}
 
                 <div className="msg-bubble-row">
-                  {/* Action buttons — only own messages */}
                   {isOwn && !isEditing && (
                     <div className="msg-actions">
                       <button
@@ -242,18 +234,13 @@ export default function ChatRoom({ room, ghostName, onLeave }) {
         )}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Typing */}
       <div className="typing-indicator">
         {typingText && (
           <>{typingText}<span className="typing-dots"><span /><span /><span /></span></>
         )}
       </div>
-
-      {/* Input */}
       <div className="chat-input-area">
         <div className="chat-input-row">
-          {/* Emoji button */}
           <div className="emoji-picker-wrap" ref={emojiRef}>
             <button
               id="emoji-toggle-btn"
