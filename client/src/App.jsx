@@ -5,13 +5,12 @@ import ChatRoom from './components/ChatRoom';
 
 export default function App() {
   const [ghostName, setGhostName] = useState('');
-  const [currentRoom, setCurrentRoom] = useState(null); // room object
+  const [currentRoom, setCurrentRoom] = useState(null); 
 
   useEffect(() => {
     socket.on('ghost:assigned', ({ ghostName }) => {
       setGhostName(ghostName);
     });
-    // Request ghost name after listener is registered (fixes race condition)
     socket.emit('ghost:request');
     return () => socket.off('ghost:assigned');
   }, []);
