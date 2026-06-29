@@ -9,16 +9,12 @@ export default function Lobby({ ghostName, onJoinRoom }) {
   const [newDesc, setNewDesc] = useState('');
   const [creating, setCreating] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
-
-  // Fetch initial rooms
   useEffect(() => {
     fetch('http://localhost:4000/api/rooms')
       .then((r) => r.json())
       .then(setRooms)
       .catch(console.error);
   }, []);
-
-  // Live updates via socket
   useEffect(() => {
     socket.on('rooms:updated', setRooms);
     return () => socket.off('rooms:updated', setRooms);
@@ -58,8 +54,6 @@ export default function Lobby({ ghostName, onJoinRoom }) {
           Pick a room, say what you feel, and vanish.
         </p>
       </div>
-
-      {/* Create Room */}
       <div className="create-room-card">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: showCreate ? '1rem' : 0 }}>
           <p className="create-room-title">Create a Room</p>
@@ -105,8 +99,6 @@ export default function Lobby({ ghostName, onJoinRoom }) {
           </form>
         )}
       </div>
-
-      {/* Room List */}
       <div>
         <div className="rooms-section-header">
           <span className="rooms-section-label">Active Rooms</span>
